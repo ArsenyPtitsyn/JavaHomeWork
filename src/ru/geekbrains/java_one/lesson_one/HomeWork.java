@@ -2,60 +2,50 @@ package ru.geekbrains.java_one.lesson_one;
 
 public class HomeWork {
     public static void main(String[] args) {
+        final int varOne = 13;
+        final int varTwo = 17;
+        final int varThree = 37;
+        final int varFour = 97;
+
+        final float fOne = 13f;
+        final float fTwo = 17f;
+        final float fThree = 37f;
+        final float fFour = 97.0f;
+
         // Вызов метода doMath
         double res = doMath(13, 17, 37, 97);
-        System.out.println("Результат выполнения метода doMath: " + res); // Проверка метода doMath
-
-        // Вызов метода checkSum с проверкой результатов для нескольких случаев...
-        boolean rangeOfSum = checkSum(12, 5);
-        System.out.println("Рузультат выполнения метода checkSum(12, 5): " + rangeOfSum);
-        rangeOfSum = checkSum(3, 5);
-        System.out.println("Рузультат выполнения метода checkSum(3, 5): " + rangeOfSum);
-        rangeOfSum = checkSum(-12, 25);
-        System.out.println("Рузультат выполнения метода checkSum(-12, 25): " + rangeOfSum);
-        rangeOfSum = checkSum(-12, 0);
-        System.out.println("Рузультат выполнения метода checkSum(-12, 0): " + rangeOfSum);
-
-        // Вызов метода isPositive с проверкой результатов для нескольких случаев...
-        System.out.println("Число 5 положительно: " + isPositive(5));
-        System.out.println("Число 0 положительно: " + isPositive(0));
-        System.out.println("Число 5 положительно: " + isPositive(-3));
-
-        // Вызов метода greetings...
-        greetings("Арсений");
-        greetings("Иван");
-
-        // Вызов метода isLeapYear и проверка результатов для нескольких вариантов
-        System.out.println("1300 год является високосным: " + isLeapYear(1300));
-        System.out.println("2048 год является високосным: " + isLeapYear(2048));
-        System.out.println("2047 год является високосным: " + isLeapYear(2047));
-        System.out.println("2100 год является високосным: " + isLeapYear(2100));
-        System.out.println("1500 год является високосным: " + isLeapYear(1500));
-        System.out.println("1400 год является високосным: " + isLeapYear(1400));
-        System.out.println("2000 год является високосным: " + isLeapYear(2000));
+        System.out.println("Результат выполнения метода doMath: " + doMath(varOne, varTwo, varThree, varFour));
+        System.out.println("Результат выполнения переопределённого метода doMath: "
+                + doMath(fOne, fTwo, fThree, fFour));
+        System.out.println("Сумма двух чисел находится в нужном диапазоне? " + checkSum(-5, 20));
+        System.out.println("Ваше число - " + (isPositive(-20) ? "положительно" : "отрицательно") + "!");
+        System.out.println(greetings("Arseny"));
+        System.out.println("Заданный год високосный? " + isLeapYear(1500));
     }
 
-    private static double doMath(int a, int b, int c, int d) {
-        double result = a * (b + (1.0 * c / d));
-        return result;
+    private static float doMath(int a, int b, int c, int d) {
+        return a * (b + (1f * c / d));
+    }
+
+    private static float doMath(float a, float b, float c, float d) {
+        if (d == 0) return 0;
+        return a * (b + (c * 1f / d));
     }
 
     private static boolean checkSum(int x, int y) {
-        boolean isSumCorrect = ((x + y >= 10) && (x + y <= 20));
-        return isSumCorrect;
+        int sum = x + y;
+        return sum <= 20 && sum >= 10;
     }
 
     private static boolean isPositive(int a) {
-        boolean bool = a >= 0;
-        return bool;
+        return a >= 0;
     }
 
-    private static void greetings(String name) {
-        System.out.println("Привет, " + name);
+    private static String greetings(String name) {
+        return "Привет, " + name + "!";
     }
 
     private static boolean isLeapYear(int year) {
-        boolean isLeap = ((year % 4 == 0) && !(year % 400 == 100) && !(year % 400 == 200) && !(year % 400 == 300));
-        return isLeap;
+        return (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
     }
 }
