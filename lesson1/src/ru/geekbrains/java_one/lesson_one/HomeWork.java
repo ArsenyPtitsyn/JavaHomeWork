@@ -20,7 +20,7 @@ public class HomeWork {
         System.out.println("Сумма двух чисел находится в нужном диапазоне? " + checkSum(-5, 20));
         System.out.println("Ваше число - " + (isPositive(-20) ? "положительно" : "отрицательно") + "!");
         System.out.println(greetings("Arseny"));
-        System.out.println("Заданный год високосный? " + isLeapYear(1500));
+        System.out.println("Заданный год високосный? " + isLeapYear(2000));
     }
 
     private static float doMath(int a, int b, int c, int d) {
