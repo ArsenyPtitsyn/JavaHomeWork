@@ -87,19 +87,27 @@ public class HomeWork2 {
         return additionalArray;
     }
 
-//    private static int[] slideArrayWithoutAdditionalArray(int[] array, int offset) {
-//
-//        int remainder; // actual offset (< array.length, >= 0)
-//
-//        if(offset < 0)
-//            remainder = offset % array.length + array.length;
-//        else
-//            remainder = offset % array.length;
-//
-//
-//
-//        return array;
-//    }
+    private static int[] slideArrayWithoutAdditionalArray(int[] array, int offset) { // n циклических сдвигов на 1 вправо
+
+        int remainder; // actual offset (< array.length, >= 0)
+
+        if(offset < 0)
+            remainder = offset % array.length + array.length;
+        else
+            remainder = offset % array.length;
+
+        for(int k = 0; k < remainder; k++) {
+
+            int buffer = array[array.length - 1];
+
+            for (int i = array.length - 1; i > 0; i--) {
+
+                array[i] = array[i - 1];
+            }
+            array[0] = buffer;
+        }
+        return array;
+    }
 
     public static void main(String[] args) {
 
@@ -134,6 +142,8 @@ public class HomeWork2 {
 
         final int[] slideArr = {17, 14, 34, 25, 64, 12, 58, 33, 1, 2};
         System.out.println("После циклической перестановки: " +
-                Arrays.toString(slideArrayUsingAdditionalArray(slideArr, 57)));
+                Arrays.toString(slideArrayUsingAdditionalArray(slideArr, -57)));
+        System.out.println("После циклической перестановки: " +
+                Arrays.toString(slideArrayWithoutAdditionalArray(slideArr, -57)));
     }
 }
