@@ -64,7 +64,6 @@ public class HomeWork2 {
                 sumOfPartOne += array[k];
             }
             if(2 * sumOfPartOne == sum) return true;
-            else continue;
         }
         return false;
     }
