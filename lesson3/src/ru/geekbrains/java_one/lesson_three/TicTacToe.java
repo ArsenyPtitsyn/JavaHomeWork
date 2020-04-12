@@ -7,6 +7,7 @@ public class TicTacToe {
 
     private static int fieldSizeY;
     private static int fieldSizeX;
+    private static int winSequence;
     private static char[][] field;
 
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -18,8 +19,8 @@ public class TicTacToe {
 
     // init field
     private static void initMap() {
-        fieldSizeY = 3;
-        fieldSizeX = 3;
+        fieldSizeY = 5;
+        fieldSizeX = 5;
         field = new char[fieldSizeY][fieldSizeX];
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
@@ -30,7 +31,7 @@ public class TicTacToe {
 
     // print field
     private static void printMap() {
-        System.out.println("-------");
+        System.out.println("-----------");
         for (int y = 0; y < fieldSizeY; y++) {
             System.out.print("|");
             for (int x = 0; x < fieldSizeX; x++) {
@@ -75,34 +76,47 @@ public class TicTacToe {
 
     // check win
     private static boolean checkWin(char c) {
+        winSequence = 4;
 
         for(int i = 0; i < fieldSizeY; i++) {
-            boolean res = field[i][0] == c;
-            for(int j = 1; j < fieldSizeX && res; j++) {
-                res = field[i][j] == c;
+            for(int j = 0; j <= fieldSizeX - winSequence; j++) {
+                boolean res = field[i][j] == c;
+                for (int k = j + 1; k < j + winSequence && res; k++) {
+                    res = field[i][k] == c;
+                }
+                if (res) return true;
             }
-            if(res) return true;
         }
 
         for(int i = 0; i < fieldSizeX; i++) {
-            boolean res = field[0][i] == c;
-            for(int j = 1; j < fieldSizeY && res; j++) {
-                res = field[j][i] == c;
+            for(int j = 0; j <= fieldSizeY - winSequence; j++) {
+                boolean res = field[j][i] == c;
+                for(int k = j + 1; k < j + winSequence && res; k++) {
+                    res = field[k][i] == c;
+                }
+                if (res) return true;
             }
-            if(res) return true;
         }
 
-        boolean res = field[0][0] == c;
-        for(int i = 1; i < fieldSizeX && i < fieldSizeY && res; i++) {
-            res = field[i][i] == c;
+        for(int i = 0; i <= fieldSizeY - winSequence; i++) {
+            for(int j = 0; j <= fieldSizeX - winSequence; j++) {
+                boolean res = field[i][j] == c;
+                for(int k = 1; k < winSequence && res; k++) {
+                    res = field[i + k][j + k] == c;
+                }
+                if(res) return true;
+            }
         }
-        if(res) return true;
 
-        boolean res1 = field[0][2] == c;
-        for(int i = 1; i < fieldSizeX && i < fieldSizeY && res1; i++) {
-            res1 = field[i][fieldSizeX - 1 - i] == c;
+        for(int i = 3; i < fieldSizeY; i++) {
+            for(int j = 0; j <= fieldSizeX - winSequence; j++) {
+                boolean res = field[i][j] == c;
+                for(int k = 1; k < winSequence && res; k++) {
+                    res = field[i - k][j + k] == c;
+                }
+                if(res) return true;
+            }
         }
-        if(res1) return true;
 
         return false;
     }
