@@ -1,13 +1,11 @@
-package ru.geekbrains.java_one.lesson_three;
-
 import java.util.Random;
 import java.util.Scanner;
 
-public class TicTacToe {
+public class Exercise4 {
 
     private static int fieldSizeY;
     private static int fieldSizeX;
-//    private static int winSequence;
+    private static int winSequence;
     private static char[][] field;
 
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -76,7 +74,7 @@ public class TicTacToe {
 
     // check win
     private static boolean checkWin(char c) {
-    //    winSequence = 4;
+     //   winSequence = 3;
 
         for(int i = 0; i < fieldSizeY; i++) {
             boolean res = field[i][0] == c;
