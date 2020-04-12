@@ -76,22 +76,35 @@ public class TicTacToe {
     // check win
     private static boolean checkWin(char c) {
 
-        // hor
-        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
-        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
-        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+        for(int i = 0; i < fieldSizeY; i++) {
+            boolean res = field[i][0] == c;
+            for(int j = 1; j < fieldSizeX && res; j++) {
+                res = field[i][j] == c;
+            }
+            if(res) return true;
+        }
 
-        //ver
-        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
-        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
-        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
+        for(int i = 0; i < fieldSizeY; i++) {
+            boolean res = field[0][i] == c;
+            for(int j = 1; j < fieldSizeX && res; j++) {
+                res = field[j][i] == c;
+            }
+            if(res) return true;
+        }
 
-        //dia
-        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
-        if (field[0][2] == c && field[1][1] == c && field[2][0] == c) return true;
+        boolean res = field[0][0] == c;
+        for(int i = 1; i < 3 && res; i++) {
+            res = field[i][i] == c;
+        }
+        if(res) return true;
+
+        boolean res1 = field[0][2] == c;
+        for(int i = 1; i < 3 && res1; i++) {
+            res1 = field[i][fieldSizeX - 1 - i] == c;
+        }
+        if(res1) return true;
+
         return false;
-
-
     }
 
     // check draw
