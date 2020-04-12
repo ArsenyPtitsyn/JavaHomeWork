@@ -93,13 +93,13 @@ public class TicTacToe {
         }
 
         boolean res = field[0][0] == c;
-        for(int i = 1; i < 3 && res; i++) {
+        for(int i = 1; i < fieldSizeX && i < fieldSizeY && res; i++) {
             res = field[i][i] == c;
         }
         if(res) return true;
 
         boolean res1 = field[0][2] == c;
-        for(int i = 1; i < 3 && res1; i++) {
+        for(int i = 1; i < fieldSizeX && i < fieldSizeY && res1; i++) {
             res1 = field[i][fieldSizeX - 1 - i] == c;
         }
         if(res1) return true;
