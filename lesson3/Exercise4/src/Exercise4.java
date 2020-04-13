@@ -1,10 +1,11 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Exercise3 {
+public class Exercise4 {
 
     private static int fieldSizeY;
     private static int fieldSizeX;
+    private static int winSequence;
     private static char[][] field;
 
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -28,7 +29,7 @@ public class Exercise3 {
 
     // print field
     private static void printMap() {
-        System.out.println("-------");
+        System.out.println("-----------");
         for (int y = 0; y < fieldSizeY; y++) {
             System.out.print("|");
             for (int x = 0; x < fieldSizeX; x++) {
@@ -73,6 +74,7 @@ public class Exercise3 {
 
     // check win
     private static boolean checkWin(char c) {
+     //   winSequence = 3;
 
         for(int i = 0; i < fieldSizeY; i++) {
             boolean res = field[i][0] == c;
@@ -82,22 +84,22 @@ public class Exercise3 {
             if(res) return true;
         }
 
-        for(int i = 0; i < fieldSizeX; i++) {
+        for(int i = 0; i < fieldSizeY; i++) {
             boolean res = field[0][i] == c;
-            for(int j = 1; j < fieldSizeY && res; j++) {
+            for(int j = 1; j < fieldSizeX && res; j++) {
                 res = field[j][i] == c;
             }
             if(res) return true;
         }
 
         boolean res = field[0][0] == c;
-        for(int i = 1; i < fieldSizeX && i < fieldSizeY && res; i++) {
+        for(int i = 1; i < 3 && res; i++) {
             res = field[i][i] == c;
         }
         if(res) return true;
 
         boolean res1 = field[0][2] == c;
-        for(int i = 1; i < fieldSizeX && i < fieldSizeY && res1; i++) {
+        for(int i = 1; i < 3 && res1; i++) {
             res1 = field[i][fieldSizeX - 1 - i] == c;
         }
         if(res1) return true;
