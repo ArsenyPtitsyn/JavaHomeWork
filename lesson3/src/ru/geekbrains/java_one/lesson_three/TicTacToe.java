@@ -78,6 +78,7 @@ public class TicTacToe {
     private static boolean checkWin(char c) {
         winSequence = 4;
 
+        //win by rows
         for(int i = 0; i < fieldSizeY; i++) {
             for(int j = 0; j <= fieldSizeX - winSequence; j++) {
                 boolean res = field[i][j] == c;
@@ -88,6 +89,7 @@ public class TicTacToe {
             }
         }
 
+        //win by columns
         for(int i = 0; i < fieldSizeX; i++) {
             for(int j = 0; j <= fieldSizeY - winSequence; j++) {
                 boolean res = field[j][i] == c;
@@ -98,6 +100,7 @@ public class TicTacToe {
             }
         }
 
+        //win by increment-increment diagonal
         for(int i = 0; i <= fieldSizeY - winSequence; i++) {
             for(int j = 0; j <= fieldSizeX - winSequence; j++) {
                 boolean res = field[i][j] == c;
@@ -108,6 +111,7 @@ public class TicTacToe {
             }
         }
 
+        //win by increment-decrement diagonal
         for(int i = 3; i < fieldSizeY; i++) {
             for(int j = 0; j <= fieldSizeX - winSequence; j++) {
                 boolean res = field[i][j] == c;
