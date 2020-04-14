@@ -311,6 +311,14 @@ public class Ex4 {
                 break mainLoop;
             }
 
+            // First AI move (if cross in the center put 0 in the corner,
+            // if cross in the corner put 0 in the center, if cross elsewhere
+            // put 0 in the center or in the corner near by cross or in the opposite cell
+
+            // Second AI move (if crosses in the center and in the corner and 0 in the
+            // same diagonal put 0 in any free corner, if crosses in the diagonal corners
+            // and 0 in the center put 0 not in any free corner...
+
             x = RANDOM.nextInt(fieldSizeX);
             y = RANDOM.nextInt(fieldSizeY);
         }while (!(isValidCell(y, x) && isEmptyCell(y, x)));
