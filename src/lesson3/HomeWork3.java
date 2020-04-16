@@ -19,8 +19,8 @@ public class HomeWork3 {
 
     // init field
     private static void initMap() {
-        fieldSizeY = 5;
-        fieldSizeX = 5;
+        fieldSizeY = 10;
+        fieldSizeX = 15;
         field = new char[fieldSizeY][fieldSizeX];
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
@@ -49,7 +49,7 @@ public class HomeWork3 {
             System.out.printf("Введите координаты хода X и Y (от 1 до %d) через пробел: ", fieldSizeX);
             x = SCANNER.nextInt() - 1;
             y = SCANNER.nextInt() - 1;
-        } while (!(isEmptyCell(y, x) && isValidCell(y, x)));
+        } while (!(isValidCell(y, x) && isEmptyCell(y, x)));
         field[y][x] = HUMAN_DOT;
     }
 
@@ -65,60 +65,99 @@ public class HomeWork3 {
 
     // ai turn
     private static void aiTurn() {
-        int x;
+
         int y;
-        do {
+        int x;
+
+        mainLoop:
+        do{
+            // Checking for win for AI
+            for(int i = 0; i < fieldSizeY; i++) {
+                for(int j = 0; j < fieldSizeX; j++) {
+                    if(isEmptyCell(i, j)) {
+                        field[i][j] = AI_DOT;
+                        if (checkLines(AI_DOT)) {
+                            y = i;
+                            x = j;
+                            break mainLoop;
+                        }
+                        else field[i][j] = EMPTY_DOT;
+                    }
+                }
+            }
+
+            // Checking for loss for AI
+            for(int i = 0; i < fieldSizeY; i++) {
+                for(int j = 0; j < fieldSizeX; j++) {
+                    if(isEmptyCell(i, j)) {
+                        field[i][j] = HUMAN_DOT;
+                        if(checkLines(HUMAN_DOT)) {
+                            y = i;
+                            x = j;
+                            break mainLoop;
+                        } else field[i][j] = EMPTY_DOT;
+                    }
+                }
+            }
+
+
             x = RANDOM.nextInt(fieldSizeX);
             y = RANDOM.nextInt(fieldSizeY);
-        } while (!isEmptyCell(y, x));
+        }while (!(isEmptyCell(y, x) && isValidCell(y, x)));
         field[y][x] = AI_DOT;
+
     }
 
     // check win
     private static boolean checkWin(char c) {
-        winSequence = 4;
+        if(checkLines(c)) return true;
+        return false;
+    }
 
-        //win by rows
+    private static boolean checkLines(char c) {
+        winSequence = 5;
+
+        // Check for win by rows
         for(int i = 0; i < fieldSizeY; i++) {
             for(int j = 0; j <= fieldSizeX - winSequence; j++) {
-                boolean res = field[i][j] == c;
-                for (int k = j + 1; k < j + winSequence && res; k++) {
-                    res = field[i][k] == c;
+                boolean winByRows = field[i][j] == c;
+                for (int k = 1; k < winSequence && winByRows; k++) {
+                    winByRows = field[i][j + k] == c;
                 }
-                if (res) return true;
+                if(winByRows) return true;
             }
         }
 
-        //win by columns
+        // Check for win by columns
         for(int i = 0; i < fieldSizeX; i++) {
             for(int j = 0; j <= fieldSizeY - winSequence; j++) {
-                boolean res = field[j][i] == c;
-                for(int k = j + 1; k < j + winSequence && res; k++) {
-                    res = field[k][i] == c;
+                boolean winByColumns = field[j][i] == c;
+                for(int k = 1; k < winSequence && winByColumns; k++) {
+                    winByColumns = field[j + k][i] == c;
                 }
-                if (res) return true;
+                if(winByColumns) return true;
             }
         }
 
-        //win by increment-increment diagonal
+        // Check for win by main diagonal
         for(int i = 0; i <= fieldSizeY - winSequence; i++) {
             for(int j = 0; j <= fieldSizeX - winSequence; j++) {
-                boolean res = field[i][j] == c;
-                for(int k = 1; k < winSequence && res; k++) {
-                    res = field[i + k][j + k] == c;
+                boolean winByMainDiagonal = field[i][j] == c;
+                for(int k = 1; k < winSequence && winByMainDiagonal; k++) {
+                    winByMainDiagonal = field[i + k][j + k] == c;
                 }
-                if(res) return true;
+                if(winByMainDiagonal) return true;
             }
         }
 
-        //win by increment-decrement diagonal
-        for(int i = 3; i < fieldSizeY; i++) {
-            for(int j = 0; j <= fieldSizeX - winSequence; j++) {
-                boolean res = field[i][j] == c;
-                for(int k = 1; k < winSequence && res; k++) {
-                    res = field[i - k][j + k] == c;
+        // Check for win by side diagonal
+        for(int i = 0; i <= fieldSizeY - winSequence; i++) {
+            for(int j = winSequence - 1; j < fieldSizeX; j++) {
+                boolean winBySideDiagonal = field[i][j] == c;
+                for(int k = 1; k < winSequence && winBySideDiagonal; k++) {
+                    winBySideDiagonal = field[i + k][j - k] == c;
                 }
-                if(res) return true;
+                if(winBySideDiagonal) return true;
             }
         }
 
