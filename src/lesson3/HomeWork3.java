@@ -103,7 +103,7 @@ public class HomeWork3 {
 
             x = RANDOM.nextInt(fieldSizeX);
             y = RANDOM.nextInt(fieldSizeY);
-        }while (!(isEmptyCell(y, x) && isValidCell(y, x)));
+        } while (!isEmptyCell(y, x));
         field[y][x] = AI_DOT;
 
     }
