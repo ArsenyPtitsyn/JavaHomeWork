@@ -46,7 +46,8 @@ public class HomeWork3 {
         int x;
         int y;
         do {
-            System.out.printf("Введите координаты хода X и Y (от 1 до %d) через пробел: ", fieldSizeX);
+            System.out.printf("Введите координаты хода X (от 1 до %d) и Y (от 1 до %d) через пробел: ",
+                    fieldSizeX, fieldSizeY);
             x = SCANNER.nextInt() - 1;
             y = SCANNER.nextInt() - 1;
         } while (!(isValidCell(y, x) && isEmptyCell(y, x)));
@@ -76,7 +77,7 @@ public class HomeWork3 {
                 for(int j = 0; j < fieldSizeX; j++) {
                     if(isEmptyCell(i, j)) {
                         field[i][j] = AI_DOT;
-                        if (checkLines(AI_DOT)) {
+                        if (checkWin(AI_DOT)) {
                             y = i;
                             x = j;
                             break mainLoop;
@@ -91,7 +92,7 @@ public class HomeWork3 {
                 for(int j = 0; j < fieldSizeX; j++) {
                     if(isEmptyCell(i, j)) {
                         field[i][j] = HUMAN_DOT;
-                        if(checkLines(HUMAN_DOT)) {
+                        if(checkWin(HUMAN_DOT)) {
                             y = i;
                             x = j;
                             break mainLoop;
@@ -110,58 +111,46 @@ public class HomeWork3 {
 
     // check win
     private static boolean checkWin(char c) {
-        if(checkLines(c)) return true;
+        for(int i = 0; i < fieldSizeY; i++) {
+            for(int j = 0; j < fieldSizeX; j++) {
+                if(checkLine(c, i, j, 0, 1) || checkLine(c, i, j, 1, 0) ||
+                        checkLine(c, i, j, 1, 1) || checkLine(c, i, j, -1, 1))
+                    return true;
+            }
+        }
         return false;
     }
 
-    private static boolean checkLines(char c) {
+    private static boolean checkLine(char c, int y, int x, int dy, int dx) {
+
         winSequence = 5;
 
-        // Check for win by rows
-        for(int i = 0; i < fieldSizeY; i++) {
-            for(int j = 0; j <= fieldSizeX - winSequence; j++) {
-                boolean winByRows = field[i][j] == c;
-                for (int k = 1; k < winSequence && winByRows; k++) {
-                    winByRows = field[i][j + k] == c;
-                }
-                if(winByRows) return true;
-            }
+        // row
+        if (dy == 0 && dx == 1 && x <= fieldSizeX - winSequence) {
+            return checkLines(c, y, x, dy, dx);
         }
-
-        // Check for win by columns
-        for(int i = 0; i < fieldSizeX; i++) {
-            for(int j = 0; j <= fieldSizeY - winSequence; j++) {
-                boolean winByColumns = field[j][i] == c;
-                for(int k = 1; k < winSequence && winByColumns; k++) {
-                    winByColumns = field[j + k][i] == c;
-                }
-                if(winByColumns) return true;
-            }
+        // column
+        else if(dy == 1 && dx == 0 && y <= fieldSizeY - winSequence) {
+            return checkLines(c, y, x, dy, dx);
         }
-
-        // Check for win by main diagonal
-        for(int i = 0; i <= fieldSizeY - winSequence; i++) {
-            for(int j = 0; j <= fieldSizeX - winSequence; j++) {
-                boolean winByMainDiagonal = field[i][j] == c;
-                for(int k = 1; k < winSequence && winByMainDiagonal; k++) {
-                    winByMainDiagonal = field[i + k][j + k] == c;
-                }
-                if(winByMainDiagonal) return true;
-            }
+        // main diagonal
+        else if(dy == 1 && dx == 1 && x <= fieldSizeX - winSequence && y <= fieldSizeY - winSequence) {
+            return checkLines(c, y, x, dy, dx);
         }
-
-        // Check for win by side diagonal
-        for(int i = 0; i <= fieldSizeY - winSequence; i++) {
-            for(int j = winSequence - 1; j < fieldSizeX; j++) {
-                boolean winBySideDiagonal = field[i][j] == c;
-                for(int k = 1; k < winSequence && winBySideDiagonal; k++) {
-                    winBySideDiagonal = field[i + k][j - k] == c;
-                }
-                if(winBySideDiagonal) return true;
-            }
+        // side diagonal
+        else if(dy == -1 && dx == 1 && y >= winSequence - 1 && x <= fieldSizeX - winSequence) {
+            return checkLines(c, y, x, dy, dx);
         }
+        else return false;
+    }
 
-        return false;
+    private static boolean checkLines(char c, int y, int x, int dy, int dx) {
+        boolean winByLine = field[y][x] == c;
+        for (int i = 1; i < winSequence && winByLine; i++) {
+            winByLine = field[y + dy * i][x + dx * i] == c;
+        }
+        if (winByLine) return true;
+        else return false;
     }
 
     // check draw
