@@ -113,44 +113,32 @@ public class HomeWork3 {
     private static boolean checkWin(char c) {
         for(int i = 0; i < fieldSizeY; i++) {
             for(int j = 0; j < fieldSizeX; j++) {
-                if(checkLine(c, i, j, 0, 1) || checkLine(c, i, j, 1, 0) ||
-                        checkLine(c, i, j, 1, 1) || checkLine(c, i, j, -1, 1))
+                if(checkLines(c, i, j))
                     return true;
             }
         }
         return false;
     }
 
-    private static boolean checkLine(char c, int y, int x, int dy, int dx) {
-
+    private static boolean checkDirection(char c, int y, int x, int dy, int dx,
+                                          boolean directionConditions) {
         winSequence = 5;
-
-        // row
-        if (dy == 0 && dx == 1 && x <= fieldSizeX - winSequence) {
-            return checkLines(c, y, x, dy, dx);
-        }
-        // column
-        else if(dy == 1 && dx == 0 && y <= fieldSizeY - winSequence) {
-            return checkLines(c, y, x, dy, dx);
-        }
-        // main diagonal
-        else if(dy == 1 && dx == 1 && x <= fieldSizeX - winSequence && y <= fieldSizeY - winSequence) {
-            return checkLines(c, y, x, dy, dx);
-        }
-        // side diagonal
-        else if(dy == -1 && dx == 1 && y >= winSequence - 1 && x <= fieldSizeX - winSequence) {
-            return checkLines(c, y, x, dy, dx);
+        boolean winByLine = field[y][x] == c;
+        if(directionConditions == true) {
+            for (int i = 1; i < winSequence && winByLine; i++) {
+                winByLine = field[y + i * dy][x + i * dx] == c;
+            }
+            if (winByLine) return true;
+            else return false;
         }
         else return false;
     }
 
-    private static boolean checkLines(char c, int y, int x, int dy, int dx) {
-        boolean winByLine = field[y][x] == c;
-        for (int i = 1; i < winSequence && winByLine; i++) {
-            winByLine = field[y + dy * i][x + dx * i] == c;
-        }
-        if (winByLine) return true;
-        else return false;
+    private static boolean checkLines(char c, int y, int x) {
+        return (checkDirection(c, y, x, 0, 1, x <= fieldSizeX - winSequence) ||
+                checkDirection(c, y, x, 1, 0, y <= fieldSizeY - winSequence) ||
+                checkDirection(c, y, x, 1, 1, x <= fieldSizeX - winSequence && y <= fieldSizeY - winSequence) ||
+                checkDirection(c, y, x, -1, 1, y >= winSequence - 1 && x <= fieldSizeX - winSequence));
     }
 
     // check draw
