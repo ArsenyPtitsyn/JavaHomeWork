@@ -1,6 +1,6 @@
 package lesson5;
 
-public abstract class Animal {
+public class Animal {
     protected  final float maxJumpHeight;
     protected  final float maxRunDistance;
 
@@ -20,9 +20,19 @@ public abstract class Animal {
         this.maxRunDistance = maxRunDistance;
     }
 
-    protected abstract void jump(float height);
+    protected boolean jump(float height) {
+        if(height <= maxJumpHeight && height >= 0)
+            return true;
+        else return false;
+    }
 
-    protected abstract void run(float distance);
+    protected boolean run(float distance) {
+        if (distance >= 0 && distance <= maxRunDistance)
+            return true;
+        else return false;
+    }
 
-    protected abstract void swim(float distance);
+    protected boolean swim(float distance) {
+        return false;
+    }
 }
