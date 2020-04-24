@@ -9,10 +9,31 @@ public class Main {
         Dog d2 = new Dog("Sharik", "brown", 2, 0.5f, 327.4f, 1345.3f);
         Animal[] zoo = {с, d1, h, b, d2};
         for(int i = 0; i < zoo.length; i++) {
-            zoo[i].run(400.6f);
-            zoo[i].jump(2.1f);
-            zoo[i].swim(3.5f);
+            runReaction(zoo[i], 407.3f);
+            jumpReaction(zoo[i], 2.1f);
+            swimReaction(zoo[i], 3.5f);
             System.out.println("---------------------------------------------------");
         }
+    }
+
+    private static void runReaction(Animal a, float x) {
+        if(a.run(x) == true)
+            System.out.println(a.name + " ran " + x + " meters!");
+        else
+            System.out.println("Too far! " + a.name + " can't run " + x + "meters.");
+    }
+
+    private static void jumpReaction(Animal a, float x) {
+        if(a.jump(x) == true)
+            System.out.println(a.name + " jumped on " + x + " meters!");
+        else
+            System.out.println("Too high! " + a.name + " can't jump on " + x + " meters.");
+    }
+
+    private static void swimReaction(Animal a, float x) {
+        if(a.swim(x) == true)
+            System.out.println(a.name + " swum " + x + " meters!");
+        else
+            System.out.println("Too far! " + a.name + " can't swim " + x + " meters.");
     }
 }
