@@ -1,6 +1,7 @@
 package lesson6;
 
 import java.io.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class HomeWork6 {
@@ -31,6 +32,7 @@ public class HomeWork6 {
                     "changes made to user-created temporary tables.\n");
 
             concatenateFiles();
+            System.out.println(findMatchInChar("utility", new FileInputStream("file1.txt")));
 
         } catch (FileNotFoundException e){
             e.printStackTrace();
@@ -63,5 +65,14 @@ public class HomeWork6 {
         ps.println(str);
         ps.close();
         fos.close();
+    }
+
+    private static boolean findMatchInChar (String str, FileInputStream fis) {
+        Scanner scanner = new Scanner(fis);
+        while(scanner.hasNext()) {
+            if(scanner.next().equals(str))
+                return true;
+        }
+        return false;
     }
 }
