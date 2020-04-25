@@ -113,43 +113,31 @@ public class HomeWork3 {
     private static boolean checkWin(char c) {
         for(int i = 0; i < fieldSizeY; i++) {
             for(int j = 0; j < fieldSizeX; j++) {
-                if(checkLine(c, i, j, 0, 1) || checkLine(c, i, j, 1, 0) ||
-                        checkLine(c, i, j, 1, 1) || checkLine(c, i, j, -1, 1))
+                if(checkLines(c, i, j))
                     return true;
             }
         }
         return false;
     }
 
-    private static boolean checkLine(char c, int y, int x, int dy, int dx) {
-
-        winSequence = 5;
-
-        // row
-        if (dy == 0 && dx == 1 && x <= fieldSizeX - winSequence) {
-            return checkLines(c, y, x, dy, dx);
-        }
-        // column
-        else if(dy == 1 && dx == 0 && y <= fieldSizeY - winSequence) {
-            return checkLines(c, y, x, dy, dx);
-        }
-        // main diagonal
-        else if(dy == 1 && dx == 1 && x <= fieldSizeX - winSequence && y <= fieldSizeY - winSequence) {
-            return checkLines(c, y, x, dy, dx);
-        }
-        // side diagonal
-        else if(dy == -1 && dx == 1 && y >= winSequence - 1 && x <= fieldSizeX - winSequence) {
-            return checkLines(c, y, x, dy, dx);
-        }
-        else return false;
+    private static boolean checkLines(char c, int y, int x) {
+        return (checkLine(c, y, x, 0, 1, x <= fieldSizeX - winSequence) ||
+                checkLine(c, y, x, 1, 0, y <= fieldSizeY - winSequence) ||
+                checkLine(c, y, x, 1, 1, x <= fieldSizeX - winSequence && y <= fieldSizeY - winSequence) ||
+                checkLine(c, y, x, -1, 1, x <= fieldSizeX - winSequence && y >= winSequence - 1));
     }
 
-    private static boolean checkLines(char c, int y, int x, int dy, int dx) {
-        boolean winByLine = field[y][x] == c;
-        for (int i = 1; i < winSequence && winByLine; i++) {
-            winByLine = field[y + dy * i][x + dx * i] == c;
+    private static boolean checkLine(char c, int y, int x, int dy, int dx, boolean directionCondition) {
+
+        winSequence = 5;
+        if(directionCondition == true) {
+            boolean winByLine = field[y][x] == c;
+            for (int i = 1; i < winSequence && winByLine; i++) {
+                winByLine = field[y + dy * i][x + dx * i] == c;
+            }
+            if (winByLine) return true;
+            else return false;
         }
-        if (winByLine) return true;
         else return false;
     }
 
