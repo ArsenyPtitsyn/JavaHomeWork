@@ -1,13 +1,8 @@
 package lesson5;
 
-public class Cat extends Animal {
+public class Cat extends Animal{
 
-    Cat(String name, float maxJump, float maxRun, float maxSwim) {
-        super("Cat", name, maxJump, maxRun, maxSwim);
-    }
-
-    @Override
-    protected int swim(float distance) {
-        return Animal.SWIM_WTF;
+    public Cat(String name, String color, int age, float maxJumpHeight, float maxRunDistance) {
+        super(name, color, age, maxJumpHeight, maxRunDistance);
     }
 }
