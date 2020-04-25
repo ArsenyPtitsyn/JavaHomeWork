@@ -1,4 +1,42 @@
 package lesson7;
 
-public class GameWindow {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GameWindow extends JFrame {
+
+    private static final int WIN_WIDTH= 507;
+    private static final int WIN_HEIGHT = 555;
+    private static final int WIN_POSITIONX = 400;
+    private static final int WIN_POSITIONY = 80;
+
+    GameWindow() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(WIN_WIDTH, WIN_HEIGHT);
+        setLocation(WIN_POSITIONX, WIN_POSITIONY);
+        setTitle("Tic Tac Toe");
+        setResizable(false);
+        JButton btnStart = new JButton("Start new game");
+        JButton btnExit = new JButton("<html><body><b>Exit game</b></body></html>");
+        btnStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        btnExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        JPanel panelBottom = new JPanel(new GridLayout(1, 2));
+        panelBottom.add(btnStart);
+        panelBottom.add(btnExit);
+
+        add(panelBottom, BorderLayout.SOUTH);
+        setVisible(true);
+    }
 }
