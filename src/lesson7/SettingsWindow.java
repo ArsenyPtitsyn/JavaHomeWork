@@ -74,8 +74,34 @@ public class SettingsWindow extends JFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 int currentValue = slideFieldSize.getValue();
-                lbFieldSize
+                lbFieldSize.setText(FIELD_SIZE_PREFIX + currentValue);
+                slideWinLen.setMaximum(currentValue);
             }
         });
+
+        add(new JLabel("Choose field size"));
+        add(lbFieldSize);
+        add(slideFieldSize);
+        add(new JLabel("Choose win length"));
+        add(lbWinLength);
+        add(slideWinLen);
+    }
+
+    private void btnStartClicked() {
+        int gameMode;
+        if(humVSAI.isSelected()) {
+            gameMode = Map.MODE_HVA;
+        } else if(humVShum.isSelected()) {
+            gameMode = Map.MODE_HVH;
+        } else {
+            throw new RuntimeException("Unknown game mode selected");
+        }
+
+        int fieldSize = slideFieldSize.getValue();
+        int winLength = slideWinLen.getValue();
+
+        gameWindow.startGame(gameMode, fieldSize, fieldSize, winLength);
+
+        setVisible(false);
     }
 }

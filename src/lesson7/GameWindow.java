@@ -11,6 +11,8 @@ public class GameWindow extends JFrame {
     private static final int WIN_HEIGHT = 555;
     private static final int WIN_POSITIONX = 400;
     private static final int WIN_POSITIONY = 80;
+    private SettingsWindow settingsWindow;
+    private Map map;
 
     GameWindow() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -23,7 +25,7 @@ public class GameWindow extends JFrame {
         btnStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                settingsWindow.setVisible(true);
             }
         });
         btnExit.addActionListener(new ActionListener() {
@@ -35,8 +37,15 @@ public class GameWindow extends JFrame {
         JPanel panelBottom = new JPanel(new GridLayout(1, 2));
         panelBottom.add(btnStart);
         panelBottom.add(btnExit);
+        map = new Map();
+        settingsWindow = new SettingsWindow(this);
 
         add(panelBottom, BorderLayout.SOUTH);
+        add(map);
         setVisible(true);
+    }
+
+    void startGame(int gameMode, int fieldSizeX, int fieldSizeY, int winLength) {
+        map.startNewGame(gameMode, fieldSizeX, fieldSizeY, winLength);
     }
 }
