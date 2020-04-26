@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Map extends JPanel {
+
     public static final int MODE_HVH = 0;
     public static final int MODE_HVA = 1;
 
@@ -12,6 +13,7 @@ public class Map extends JPanel {
     }
 
     void startNewGame(int gameMode, int fieldSizeX, int fieldSizeY, int winLength) {
-        System.out.printf("mode: %d, size: %d, len: %d\n", gameMode, fieldSizeX, winLength);
+        System.out.printf("Mode: %d; field size x: %d; field size y: %d; winLength: %d", gameMode, fieldSizeX,
+                fieldSizeY, winLength);
     }
 }
