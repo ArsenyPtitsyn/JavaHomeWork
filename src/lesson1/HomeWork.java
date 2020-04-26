@@ -13,9 +13,8 @@ public class HomeWork {
         final float fFour = 97.0f;
 
         // Вызов метода doMath
-        double res = doMath(13, 17, 37, 97);
-        System.out.println("Результат выполнения метода doMath: " + doMath(varOne, varTwo, varThree, varFour));
-        System.out.println("Результат выполнения переопределённого метода doMath: "
+        System.out.printf("Результат выполнения метода doMath: %.2f \n", + doMath(varOne, varTwo, varThree, varFour));
+        System.out.printf("Результат выполнения переопределённого метода doMath: %.2f \n",
                 + doMath(fOne, fTwo, fThree, fFour));
         System.out.println("Сумма двух чисел находится в нужном диапазоне? " + checkSum(-5, 20));
         System.out.println("Ваше число - " + (isPositive(-20) ? "положительно" : "отрицательно") + "!");
